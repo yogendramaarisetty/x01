@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Editor } from "@monaco-editor/react";
 import { Box } from "@mui/system";
+
+import Select from '@mui/joy/Select';
+import Option from '@mui/joy/Option';
 import DarkModeToggle from "./DarkModeToggle";
 //import constrainedEditor from "constrained-editor-plugin";
 
@@ -12,9 +15,10 @@ export default function CodeEditor({ codes, setCodes, language, setLanguage }) {
 
   const editorRef = useRef(null);
 
-  const handleLanguageChange = (e) => {
-    setLanguage(e.target.value);
+  const handleLanguageChange = (event, newValue) => {
+    setLanguage(newValue);
   };
+
 
   function handleOnMount(editor, monaco) {
     editorRef.current = editor;
@@ -32,21 +36,30 @@ export default function CodeEditor({ codes, setCodes, language, setLanguage }) {
     setIsDarkMode(!isDarkMode);
     setTheme(isDarkMode ? "vs-dark" : "vs");
   };
-
+  const handleChange = (event, newValue) => {
+    alert(`You chose "${newValue}"`);
+  };
   return (
-    <Box className="code-container" sx={{ display:"flex", flexDirection: "column", width: "100%", height: "100%" }}>
-      <div className="toolbar">
-        <select value={language} onChange={handleLanguageChange}>
+    <Box className="code-container" sx={{ display: "flex", flexDirection: "column", width: "100%", height: "100%" }}>
+      <Box className="toolbar" sx={{ display: "flex" }}>
+        <Select
+        value={language}
+          placeholder="Select a lang"
+          onChange={handleLanguageChange}
+          size="sm"
+          sx={{ minWidth: 100 }}
+        >
           {languages.map((language) => (
-            <option key={language}>{language}</option>
+            <Option key={language} value={language}>{language}</Option>
           ))}
-        </select>
+        </Select>
+
         <DarkModeToggle
           onChange={handleModeChange}
           toggleText={!isDarkMode ? "Light Mode" : "Dark Mode"}
         />
-      </div>
-      <div className="editor">
+      </Box>
+      <Box className="Editor" sx={{ flex: 1, overflow: "auto" }}>
         <Editor
           language={language}
           value={codes[language]["code"]}
@@ -54,7 +67,7 @@ export default function CodeEditor({ codes, setCodes, language, setLanguage }) {
           theme={theme}
           onMount={handleOnMount}
         />
-      </div>
+      </Box>
     </Box>
   );
 }

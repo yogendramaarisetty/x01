@@ -12,7 +12,7 @@ export default function TestPage() {
   
   return (
       <Box className="container" sx={{ display: "flex", width:"100%", height:"100%" }}>
-        <Stack className="sidenav">
+        <Stack className="sidenav" sx={{ padding:"5px", height: "100%", borderRight: "1px solid grey" }}>
           <div>
             {" "}
             <Link to="/all">All</Link>
