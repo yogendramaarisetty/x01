@@ -156,11 +156,11 @@ const TestQuestion = ({ updateQuestionDetails }) => {
                                     <Divider inset="context2" />
                                     <CardContent orientation="horizontal">
                                         <Typography level="body-xs" fontWeight="md" textColor="text.secondary">
-                                            6.3k views
+                                            Not Submitted Yet
                                         </Typography>
                                         <Divider orientation="vertical" />
                                         <Typography level="body-xs" fontWeight="md" textColor="text.secondary">
-                                            1 hour ago
+                                            1 minute ago
                                         </Typography>
                                     </CardContent>
                                 </CardOverflow>
