@@ -10,9 +10,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -21,6 +23,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -41,10 +44,18 @@
 }
 
 .editor {
-  flex: 1; /* This allows the editor to expand to fill available space */
-  overflow: hidden; /* Ensures the editor doesn't overflow its container */
+  flex: 1;
+  /* This allows the editor to expand to fill available space */
+  overflow: hidden;
+  /* Ensures the editor doesn't overflow its container */
 }
 
 .editor .monaco-editor {
   height: 100%;
+}
+
+.FillCard {
+  width: -webkit-fill-available;
+  margin: 7px;
+  height: -webkit-fill-available;
 }

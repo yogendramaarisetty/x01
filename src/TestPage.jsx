@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Router, Route, Link, Routes } from "react-router-dom";
+import { Route, Link, Routes } from "react-router-dom";
 import TestQuestion from "./TestQuestion";
 import { Box, Stack } from "@mui/system";
+
 
 export default function TestPage() {
   const [questionDetails, setQuestionDetails] = useState(null);
@@ -11,7 +12,7 @@ export default function TestPage() {
   };
   
   return (
-      <Box className="container" sx={{ display: "flex", width:"100%", height:"100%" }}>
+      <Box className="AppContainer" sx={{ display: "flex", width:"100vw", height:"100vh", position: "fixed" }}>
         <Stack className="sidenav" sx={{ padding:"5px", height: "100%", borderRight: "1px solid grey" }}>
           <div>
             {" "}

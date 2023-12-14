@@ -1,11 +1,25 @@
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Container } from "@mui/joy";
 
 import { useParams } from "react-router-dom";
 import SplitPane, { Pane } from "react-split-pane";
 import './assets/Split.css'
 import CodeEditor from "./CodeEditor";
+import Tooltip from '@mui/joy/Tooltip';
+import Stack from '@mui/joy/Stack';
+import Button from '@mui/joy/Button';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlayCircle } from "@fortawesome/free-regular-svg-icons";
+import JudgeService from "./service";
+import QuestionService from "./questionService";
+import Card from '@mui/joy/Card';
+
+
+const service = new JudgeService(
+    "cf4305d31bmsh82518687544739ep179fd2jsnf6d65d6ee270"
+);
+const questionService = new QuestionService();
 
 const TestQuestion = ({ updateQuestionDetails }) => {
     var initialCodes = codesByLanguage;
@@ -65,33 +79,52 @@ const TestQuestion = ({ updateQuestionDetails }) => {
     };
 
     return (
-        <Container className="BaseContainer"
-            sx={{ display: "flex", position: "relative" ,justifyContent: "center", alignItems: "center" , height:"100%", width:"100%"}}>
+        <Box className="BaseContainer"
+            sx={{ display: "flex", position: "relative", justifyContent: "center", alignItems: "center", height: "100%", width: "100%" }}>
             <SplitPane split="vertical">
 
                 <Box className="LeftPane" sx={{ height: '100%', display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Container>Left Container</Container>
+                    <Card className="FillCard" />
                 </Box>
 
                 <Box className="RightPane" sx={{ height: '100%' }}>
                     <SplitPane split="horizontal">
-                        <Pane className="TopRightPane">
-                            <CodeEditor
-                                codes={codes}
-                                setCodes={setCodes}
-                                language={language}
-                                setLanguage={setLanguage}
-                            />
+                        <Pane minSize="10%" className="TopRightPane">
+                        <CodeEditor
+                            codes={codes}
+                            setCodes={setCodes}
+                            language={language}
+                            setLanguage={setLanguage}
+                        />
                         </Pane>
                         <Pane className="BottomRightPane">
                             <Box className="ConsoleTbs">
-                                Console
+                                <Tooltip title="Run Code" arrow>
+                                    <Stack spacing={2} direction="row">
+                                        <Button
+                                            onClick={() =>
+                                                handleRunClick(
+                                                    languageIds[language],
+                                                    codes[language]["code"]
+                                                )}
+                                            loading={loading}
+                                            size="sm"
+                                            variant="soft"
+                                            endDecorator={<FontAwesomeIcon icon={faPlayCircle} />}
+                                            loadingPosition="end">
+                                            Run
+                                        </Button>
+                                        <Button color="success" loadingPosition="end" >
+                                            Submit
+                                        </Button>
+                                    </Stack>
+                                </Tooltip>
                             </Box>
                         </Pane>
                     </SplitPane>
                 </Box>
             </SplitPane>
-        </Container>
+        </Box>
     );
 };
 
