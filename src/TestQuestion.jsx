@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Box, Container } from "@mui/joy";
+import { Box, CardActions, Container } from "@mui/joy";
 
 import { useParams } from "react-router-dom";
 import SplitPane, { Pane } from "react-split-pane";
@@ -13,8 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle } from "@fortawesome/free-regular-svg-icons";
 import JudgeService from "./service";
 import QuestionService from "./questionService";
-import Card from '@mui/joy/Card';
-
+import { ButtonGroup, Card, CardContent, Divider, AspectRatio, Typography, CardOverflow } from '@mui/joy';
+import Markdown from 'react-markdown';
 
 const service = new JudgeService(
     "cf4305d31bmsh82518687544739ep179fd2jsnf6d65d6ee270"
@@ -81,50 +81,95 @@ const TestQuestion = ({ updateQuestionDetails }) => {
     return (
         <Box className="BaseContainer"
             sx={{ display: "flex", position: "relative", justifyContent: "center", alignItems: "center", height: "100%", width: "100%" }}>
-            <SplitPane split="vertical">
+            <SplitPane split="vertical" defaultSize="40%">
 
                 <Box className="LeftPane" sx={{ height: '100%', display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Card className="FillCard" />
+                    <Card className="FillCard" >
+
+                        <Typography level="h4" fontWeight="xlg" sx={{ fontWeight: 600 }}>{questionDetails ? (questionDetails.stat.question__title) : ("Loading question details...")}</Typography>
+                        <Divider inset="context" />
+                        <CardContent sx={{ overflowY: "auto" }} >
+
+                            <Markdown >
+                                {questionDetails ? (questionDetails.decription) : ("Loading question details...")}
+                            </Markdown>
+                        </CardContent>
+                        <CardOverflow variant="soft" sx={{ bgcolor: 'background.level1' }}>
+                            <Divider inset="context" />
+                            <CardContent orientation="horizontal">
+                                <Typography level="body-xs" fontWeight="md" textColor="text.secondary">
+                                    6.3k views
+                                </Typography>
+                                <Divider orientation="vertical" />
+                                <Typography level="body-xs" fontWeight="md" textColor="text.secondary">
+                                    1 hour ago
+                                </Typography>
+                            </CardContent>
+                        </CardOverflow>
+                    </Card>
                 </Box>
 
                 <Box className="RightPane" sx={{ height: '100%' }}>
-                    <SplitPane split="horizontal">
-                        <Pane minSize="10%" className="TopRightPane">
+                    <SplitPane split="horizontal" minSize={50} defaultSize={300}>
                         <CodeEditor
                             codes={codes}
                             setCodes={setCodes}
                             language={language}
                             setLanguage={setLanguage}
                         />
-                        </Pane>
-                        <Pane className="BottomRightPane">
-                            <Box className="ConsoleTbs">
-                                <Tooltip title="Run Code" arrow>
+                        <Box className="LeftPane" sx={{ height: '100%', display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+                            <Card className="FillCard" >
+                                <Box className="consoleToolBar">
                                     <Stack spacing={2} direction="row">
-                                        <Button
-                                            onClick={() =>
-                                                handleRunClick(
-                                                    languageIds[language],
-                                                    codes[language]["code"]
-                                                )}
-                                            loading={loading}
-                                            size="sm"
-                                            variant="soft"
-                                            endDecorator={<FontAwesomeIcon icon={faPlayCircle} />}
-                                            loadingPosition="end">
-                                            Run
-                                        </Button>
-                                        <Button color="success" loadingPosition="end" >
-                                            Submit
-                                        </Button>
+                                        <ButtonGroup>
+
+                                            <Tooltip title="Run Code" arrow>
+                                                <Button
+                                                    onClick={() =>
+                                                        handleRunClick(
+                                                            languageIds[language],
+                                                            codes[language]["code"]
+                                                        )}
+                                                    loading={loading}
+                                                    size="sm"
+                                                    variant="soft"
+                                                    endDecorator={<FontAwesomeIcon icon={faPlayCircle} />}
+                                                    loadingPosition="end">
+                                                    Run
+                                                </Button>
+
+                                            </Tooltip>
+
+                                            <Tooltip title="Submit to Run all TestCases" arrow>
+                                                <Button color="success" loadingPosition="end" >
+                                                    Submit
+                                                </Button>
+                                            </Tooltip>
+                                        </ButtonGroup>
                                     </Stack>
-                                </Tooltip>
-                            </Box>
-                        </Pane>
+                                </Box>
+                                <CardContent >
+                                    <code>{output}</code>
+                                </CardContent>
+                                <CardOverflow variant="soft" sx={{ bgcolor: 'background.level1' }}>
+                                    <Divider inset="context2" />
+                                    <CardContent orientation="horizontal">
+                                        <Typography level="body-xs" fontWeight="md" textColor="text.secondary">
+                                            6.3k views
+                                        </Typography>
+                                        <Divider orientation="vertical" />
+                                        <Typography level="body-xs" fontWeight="md" textColor="text.secondary">
+                                            1 hour ago
+                                        </Typography>
+                                    </CardContent>
+                                </CardOverflow>
+                            </Card>
+                        </Box>
                     </SplitPane>
                 </Box>
-            </SplitPane>
-        </Box>
+            </SplitPane >
+        </Box >
     );
 };
 
