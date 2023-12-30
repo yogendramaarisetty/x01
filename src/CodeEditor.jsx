@@ -3,7 +3,7 @@ import { Editor } from "@monaco-editor/react";
 import { Box } from "@mui/system";
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
-import DarkModeToggle from "./DarkModeToggle";
+import VsDarkModeToggle from "./VsDarkModeToggle";
 import { Card, CardOverflow, CardContent } from "@mui/joy";
 //import constrainedEditor from "constrained-editor-plugin";
 
@@ -57,7 +57,7 @@ export default function CodeEditor({ codes, setCodes, language, setLanguage }) {
               ))}
             </Select>
 
-            <DarkModeToggle
+            <VsDarkModeToggle
               onChange={handleModeChange}
               toggleText={!isDarkMode ? "Light Mode" : "Dark Mode"}
             />

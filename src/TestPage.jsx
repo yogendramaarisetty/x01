@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Route, Link, Routes } from "react-router-dom";
+import {
+  Outlet, Route, Link, Routes
+} from "react-router-dom";
 import TestQuestion from "./TestQuestion";
 import { Box, Stack } from "@mui/system";
+import { Card } from '@mui/joy';
+
 
 
 export default function TestPage() {
@@ -10,10 +14,13 @@ export default function TestPage() {
   const updateQuestionDetails = (details) => {
     setQuestionDetails(details);
   };
-  
+
   return (
-      <Box className="AppContainer" sx={{ display: "flex", width:"100vw", height:"100vh", position: "fixed" }}>
-        <Stack className="sidenav" sx={{ padding:"5px", height: "100%", borderRight: "1px solid grey" }}>
+    <Box className="AppContainer" sx={{ display: "flex", flexDirection: "column", width: "100vw", height: "100vh", position: "fixed" }}>
+      <Card></Card>
+      <Box className="TestPageContainer FillCard" sx={{ display: 'flex', margin: '0' }}>
+
+        <Stack className="sidenav" sx={{ padding: "5px", height: "100%", borderRight: "1px solid grey" }}>
           <div>
             {" "}
             <Link to="/all">All</Link>
@@ -28,14 +35,10 @@ export default function TestPage() {
             <Link to={"/questions/3"}>3</Link>
           </div>
         </Stack>
-        <Box sx={{ display: "flex-column" ,position:"relative", width:"100%", height:"inherit" }}>
-          <Routes>
-            <Route path="/questions/:questionId"element={<TestQuestion questionDetails={questionDetails} updateQuestionDetails={updateQuestionDetails} />}/>
-
-            {/* Route for displaying all questions */}
-            <Route path="/all" element={<p>Show all questions here</p>}/>
-          </Routes>
+        <Box sx={{ display: "flex-column", position: "relative", width: "100%", height: "inherit" }}>
+          <Outlet />
         </Box>
       </Box>
+    </Box>
   );
 }
